@@ -116,3 +116,40 @@ def days_since_birthday(birthday_str):
 
 birthday = "26-02-2003"
 print(days_since_birthday(birthday))
+
+# question 5
+
+def find_pattern_occurrences(text):
+    pattern_start = "C"
+    pattern_end = "jeb"
+    count = 0
+    start_index = 0
+
+    # Loop through the text to find each occurrence of the pattern
+    while True:
+        # Find the starting index of the pattern
+        start_index = text.find(pattern_start, start_index)
+
+        if start_index == -1:
+            # No more "C" found in the text, break the loop
+            break
+
+        # Try to find the ending of the pattern starting from the current start_index
+        end_index = text.find(pattern_end, start_index)
+
+        if end_index != -1 and (
+                end_index + len(pattern_end) == len(text) or text[end_index + len(pattern_end)] in ' .,;!?'):
+            # A complete pattern is found
+            count += 1
+            # Update start_index to search for the next pattern
+            start_index = end_index + len(pattern_end)
+        else:
+            # No complete pattern found, move to the next character
+            start_index += 1
+
+    return count
+
+
+# Example usage
+text = "This is a test for Cabcjeb and Cdefghijeb patterns."
+print(find_pattern_occurrences(text))
